@@ -1,0 +1,57 @@
+<div class="login-page">
+  <div class="login-left">
+    <div class="brand-content">
+      <img src="club-logo.png" alt="Central Park Basketball Club" class="hero-logo" />
+      <h1>Central Park<br/>Basketball Club</h1>
+      <p>Team Management System</p>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <div class="login-form-wrapper">
+      <img src="club-logo.png" alt="CPBC" class="mobile-logo" />
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Sign in to manage your team</p>
+
+      @if (errorMessage) {
+        <div class="error-message">{{ errorMessage }}</div>
+      }
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" [(ngModel)]="email" placeholder="Enter your email" />
+        <mat-icon matPrefix>email</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" [(ngModel)]="password" placeholder="Enter your password" />
+        <mat-icon matPrefix>lock</mat-icon>
+      </mat-form-field>
+
+      <button mat-flat-button class="full-width login-btn" (click)="onEmailLogin()">
+        Sign In
+      </button>
+
+      <div class="divider-row">
+        <mat-divider></mat-divider>
+        <span>or</span>
+        <mat-divider></mat-divider>
+      </div>
+
+      <button mat-stroked-button class="full-width google-btn" (click)="onGoogleLogin()">
+        <mat-icon>g_mobiledata</mat-icon>
+        Continue with Google
+      </button>
+
+      <div class="member-lookup-section">
+        <mat-divider></mat-divider>
+        <p class="lookup-label">Are you a member?</p>
+        <button mat-flat-button class="full-width lookup-btn" routerLink="/my-attendance">
+          <mat-icon>sports_basketball</mat-icon>
+          Check My Attendance
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

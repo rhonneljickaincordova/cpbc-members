@@ -1,0 +1,129 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'Add' }} Team</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Team Name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter team name" autocomplete="off" />
+    </mat-form-field>
+
+    <!-- Manager search (single-select) -->
+    <label class="section-label">Manager</label>
+    @if (selectedManager) {
+      <div class="selected-member">
+        <div class="selected-avatar">{{ selectedManager.name.charAt(0) }}</div>
+        <div class="selected-info">
+          <span class="selected-name">{{ selectedManager.name }}</span>
+          @if (selectedManager.nickname) {
+            <span class="selected-nickname">{{ selectedManager.nickname }}</span>
+          }
+        </div>
+        <button mat-icon-button (click)="clearManager()" type="button" class="clear-btn">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    } @else {
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Search manager</mat-label>
+        <input
+          matInput
+          [(ngModel)]="managerSearch"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="onManagerSearch()"
+          placeholder="Type name or nickname..."
+          autocomplete="off"
+        />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+
+      @if (managerResults.length > 0) {
+        <div class="member-results">
+          @for (member of managerResults; track member.id) {
+            <div class="member-result-item" (click)="selectManager(member)">
+              <div class="result-avatar">{{ member.name.charAt(0) }}</div>
+              <div class="result-info">
+                <span class="result-name">{{ member.name }}</span>
+                <span class="result-nickname">{{ member.nickname }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      @if (managerSearch && managerResults.length === 0) {
+        <p class="no-match">No member found</p>
+      }
+    }
+
+    <!-- Team members search (multi-select) -->
+    <label class="section-label">Team Members</label>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Search member to add</mat-label>
+      <input
+        matInput
+        [(ngModel)]="memberSearch"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="onMemberSearch()"
+        placeholder="Type name or nickname..."
+        autocomplete="off"
+      />
+      <mat-icon matPrefix>search</mat-icon>
+      @if (memberSearch) {
+        <button matSuffix mat-icon-button (click)="memberSearch = ''; memberResults = []" type="button">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+
+    @if (memberResults.length > 0) {
+      <div class="member-results">
+        @for (member of memberResults; track member.id) {
+          <div class="member-result-item" (click)="addMember(member)">
+            <div class="result-avatar">{{ member.name.charAt(0) }}</div>
+            <div class="result-info">
+              <span class="result-name">{{ member.name }}</span>
+              <span class="result-nickname">{{ member.nickname }}</span>
+            </div>
+            <mat-icon class="add-icon">add_circle</mat-icon>
+          </div>
+        }
+      </div>
+    }
+
+    @if (memberSearch && memberResults.length === 0) {
+      <p class="no-match">No matching members found</p>
+    }
+
+    <!-- Selected members list -->
+    @if (selectedMembers.length > 0) {
+      <div class="selected-list">
+        @for (member of selectedMembers; track member.id) {
+          <div class="selected-list-item">
+            <div class="selected-list-avatar">{{ member.name.charAt(0) }}</div>
+            <div class="selected-list-info">
+              <span class="selected-list-name">{{ member.name }}</span>
+              @if (member.nickname) {
+                <span class="selected-list-nickname">{{ member.nickname }}</span>
+              }
+            </div>
+            <button mat-icon-button (click)="removeMember(member)" type="button" class="remove-btn">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="empty-members">
+        <mat-icon>group_add</mat-icon>
+        <p>No members added yet</p>
+      </div>
+    }
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button (click)="onSave()" [disabled]="form.invalid">
+    {{ isEdit ? 'Update' : 'Add' }} Team
+  </button>
+</mat-dialog-actions>

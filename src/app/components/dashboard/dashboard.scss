@@ -1,0 +1,165 @@
+// Welcome banner
+.welcome-banner {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background: radial-gradient(circle at 80% 50%, rgba(211, 47, 47, 0.15) 0%, transparent 60%);
+  }
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+
+  h1 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+}
+
+.banner-logo {
+  width: 64px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+// Stats grid
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.stat-card {
+  border-radius: 16px !important;
+  border: 1px solid #eee;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  mat-card-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px !important;
+  }
+}
+
+.stat-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  &.members {
+    background: #e3f2fd;
+    color: #1565c0;
+  }
+
+  &.attendance {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  &.payments {
+    background: #fff3e0;
+    color: #e65100;
+  }
+}
+
+.stat-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.stat-value {
+  font-size: 26px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 899px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 599px) {
+  .welcome-banner {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .banner-content {
+    gap: 16px;
+
+    h1 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+
+  .banner-logo {
+    width: 48px;
+  }
+
+  .stat-card mat-card-content {
+    padding: 16px !important;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+}

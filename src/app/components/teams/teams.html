@@ -1,0 +1,88 @@
+<div class="page-header">
+  <h2>Teams</h2>
+  <button mat-flat-button (click)="addLeague()">
+    <mat-icon>add</mat-icon>
+    Add League
+  </button>
+</div>
+
+@if (leagues.length === 0) {
+  <div class="empty-state">
+    <mat-icon>emoji_events</mat-icon>
+    <p>No leagues yet. Create your first league to get started.</p>
+  </div>
+} @else {
+  <div class="leagues-list">
+    @for (league of leagues; track league.id) {
+      <mat-card class="league-card">
+        <mat-card-header>
+          <mat-card-title>{{ league.name }}</mat-card-title>
+          <div class="league-actions">
+            <button mat-icon-button (click)="editLeague(league)" title="Edit league">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteLeague(league)" title="Delete league">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-flat-button class="add-team-btn" (click)="openAddTeamDialog(league)">
+              <mat-icon>add</mat-icon>
+              Add Team
+            </button>
+          </div>
+        </mat-card-header>
+
+        <mat-card-content>
+          @if (getTeamsForLeague(league.id!).length === 0) {
+            <div class="empty-teams">
+              <mat-icon>groups</mat-icon>
+              <p>No teams in this league yet.</p>
+            </div>
+          } @else {
+            <div class="team-list">
+              @for (team of getTeamsForLeague(league.id!); track team.id) {
+                <div class="team-item">
+                  <div class="team-info">
+                    <div class="team-name">{{ team.name }}</div>
+                    <div class="team-meta">
+                      <span class="manager">
+                        <mat-icon>badge</mat-icon>
+                        {{ getMemberName(team.managerId) }}
+                      </span>
+                      <span class="member-count">
+                        <mat-icon>people</mat-icon>
+                        {{ team.memberIds.length }} {{ team.memberIds.length === 1 ? 'member' : 'members' }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="team-avatars">
+                    @for (memberId of team.memberIds.slice(0, 5); track memberId) {
+                      <div class="avatar" [title]="getMemberName(memberId)">
+                        {{ getMemberInitial(memberId) }}
+                      </div>
+                    }
+                    @if (team.memberIds.length > 5) {
+                      <div class="avatar more">+{{ team.memberIds.length - 5 }}</div>
+                    }
+                  </div>
+
+                  <div class="team-actions">
+                    <button mat-icon-button (click)="viewTeam(team)" title="View team">
+                      <mat-icon>visibility</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="openEditTeamDialog(team)" title="Edit team">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="deleteTeam(team)" title="Delete team">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+}

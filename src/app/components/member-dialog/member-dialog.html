@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'Add' }} Member</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="Full name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nickname</mat-label>
+      <input matInput formControlName="nickname" placeholder="Nickname" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Contact Number</mat-label>
+      <input matInput formControlName="contactNumber" placeholder="09XX XXX XXXX" />
+    </mat-form-field>
+  </form>
+
+  @if (!isEdit && queue.length > 0) {
+    <div class="queued-members">
+      <div class="queued-header">Queued ({{ queue.length }})</div>
+      @for (member of queue; track $index) {
+        <div class="queued-item">
+          <span class="queued-name">{{ member.name }} ({{ member.nickname }})</span>
+          <button mat-icon-button (click)="removeFromQueue($index)" class="queued-remove">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      }
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  @if (isEdit) {
+    <button mat-flat-button (click)="onSave()" [disabled]="form.invalid">
+      Update
+    </button>
+  } @else {
+    <button mat-button (click)="addAnother()" [disabled]="form.invalid">
+      Add & Next
+    </button>
+    <button mat-flat-button (click)="onSave()" [disabled]="form.invalid && queue.length === 0">
+      {{ queue.length > 0 ? 'Save All (' + (form.valid ? queue.length + 1 : queue.length) + ')' : 'Save' }}
+    </button>
+  }
+</mat-dialog-actions>

@@ -1,0 +1,47 @@
+<div class="welcome-banner">
+  <div class="banner-content">
+    <img src="club-logo.png" alt="CPBC" class="banner-logo" />
+    <div>
+      <h1>Central Park Basketball Club</h1>
+      <p>Team Overview</p>
+    </div>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <mat-card class="stat-card members-card">
+    <mat-card-content>
+      <div class="stat-icon-wrap members">
+        <mat-icon>people</mat-icon>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value">{{ activeMembersCount }}</div>
+        <div class="stat-label">Active Members</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card attendance-card">
+    <mat-card-content>
+      <div class="stat-icon-wrap attendance">
+        <mat-icon>fact_check</mat-icon>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value">{{ todayAttendanceCount }}</div>
+        <div class="stat-label">Today's Attendance</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card payments-card">
+    <mat-card-content>
+      <div class="stat-icon-wrap payments">
+        <mat-icon>payments</mat-icon>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value">{{ totalCollected | currency: 'PHP':'symbol':'1.0-0' }}</div>
+        <div class="stat-label">Total Fees Collected</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,114 @@
+<div class="page-header">
+  <h2>Payments</h2>
+  <button mat-flat-button (click)="openAddDialog()">
+    <mat-icon>add</mat-icon>
+    Add Payment
+  </button>
+</div>
+
+<div class="stats-row">
+  <mat-card class="stat-card">
+    <mat-card-content>
+      <div class="stat-value">{{ totalCollected | currency: 'PHP':'symbol':'1.0-0' }}</div>
+      <div class="stat-label">Total Collected</div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card">
+    <mat-card-content>
+      <div class="stat-value">{{ unpaidCount }}</div>
+      <div class="stat-label">Unpaid</div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Filter by member search -->
+<div class="filter-section">
+  @if (selectedMember) {
+    <div class="active-filter">
+      <div class="filter-avatar">{{ selectedMember.name.charAt(0) }}</div>
+      <span class="filter-name">{{ selectedMember.name }}</span>
+      @if (selectedMember.nickname) {
+        <span class="filter-nickname">({{ selectedMember.nickname }})</span>
+      }
+      <button mat-icon-button (click)="clearFilter()" class="clear-filter-btn">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  } @else {
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Filter by member</mat-label>
+      <input
+        matInput
+        [(ngModel)]="filterQuery"
+        (ngModelChange)="onFilterSearch()"
+        placeholder="Search name or nickname..."
+        autocomplete="off"
+      />
+      <mat-icon matPrefix>search</mat-icon>
+      @if (filterQuery) {
+        <button matSuffix mat-icon-button (click)="filterQuery = ''; filterResults = []">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+
+    @if (filterResults.length > 0) {
+      <div class="filter-results">
+        @for (member of filterResults; track member.id) {
+          <div class="filter-result-item" (click)="selectFilterMember(member)">
+            <div class="result-avatar">{{ member.name.charAt(0) }}</div>
+            <div class="result-info">
+              <span class="result-name">{{ member.name }}</span>
+              <span class="result-nickname">{{ member.nickname }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>
+
+<div class="table-container mat-elevation-z2">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="memberName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Member</th>
+      <td mat-cell *matCellDef="let row">{{ row.memberName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+      <td mat-cell *matCellDef="let row">{{ row.amount | currency: 'PHP':'symbol':'1.0-0' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="paymentType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+      <td mat-cell *matCellDef="let row">{{ row.paymentType }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let row">
+        <span class="status-badge" [class.paid]="row.status === 'Paid'" [class.unpaid]="row.status === 'Unpaid'">
+          {{ row.status }}
+        </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+      <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell no-data" [attr.colspan]="displayedColumns.length">
+        No payments found.
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+</div>

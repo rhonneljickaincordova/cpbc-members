@@ -1,0 +1,72 @@
+<div class="page-header">
+  <h2>Members</h2>
+  <button mat-flat-button (click)="openAddDialog()">
+    <mat-icon>add</mat-icon>
+    Add Member
+  </button>
+</div>
+
+<mat-form-field class="search-field" appearance="outline">
+  <mat-label>Search members</mat-label>
+  <input matInput (input)="applyFilter($event)" placeholder="Type to filter..." #searchInput>
+  <mat-icon matPrefix>search</mat-icon>
+</mat-form-field>
+
+<div class="table-container mat-elevation-z2">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nickname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nickname</th>
+      <td mat-cell *matCellDef="let row">{{ row.nickname }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="contactNumber">
+      <th mat-header-cell *matHeaderCellDef>Contact</th>
+      <td mat-cell *matCellDef="let row">{{ row.contactNumber }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="dateJoined">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Joined</th>
+      <td mat-cell *matCellDef="let row">{{ row.dateJoined }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let row">
+        <mat-slide-toggle
+          [checked]="row.status === 'Active'"
+          (change)="toggleStatus(row)"
+        >
+          {{ row.status }}
+        </mat-slide-toggle>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="openEditDialog(row)" matTooltip="Edit">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteMember(row)" matTooltip="Delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell no-data" [attr.colspan]="displayedColumns.length">
+        No members found.
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+</div>

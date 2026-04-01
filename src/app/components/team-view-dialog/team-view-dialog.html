@@ -1,0 +1,58 @@
+<h2 mat-dialog-title>{{ data.team.name }} <span class="member-count">{{ data.team.memberIds.length }} {{ data.team.memberIds.length === 1 ? 'member' : 'members' }}</span></h2>
+
+<mat-dialog-content>
+  @if (loading) {
+    <div class="loading-state">
+      <p>Loading attendance data...</p>
+    </div>
+  } @else if (memberAttendances.length === 0) {
+    <div class="empty-state">
+      <mat-icon>group_off</mat-icon>
+      <p>No members found in this team.</p>
+    </div>
+  } @else {
+    <table class="members-table">
+      <thead>
+        <tr>
+          <th class="col-num">#</th>
+          <th class="col-name">Name</th>
+          <th class="col-nickname">Nickname</th>
+          <th class="col-sessions">Sessions</th>
+          <th class="col-dates">Attendance Dates</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (entry of memberAttendances; track entry.member.id; let i = $index) {
+          <tr>
+            <td class="col-num">{{ i + 1 }}</td>
+            <td class="col-name">
+              <div class="name-cell">
+                <div class="avatar">{{ getMemberInitial(entry.member.name) }}</div>
+                <span>{{ entry.member.name }}</span>
+              </div>
+            </td>
+            <td class="col-nickname">{{ entry.member.nickname }}</td>
+            <td class="col-sessions">
+              <span class="attendance-badge">{{ entry.records.length }}</span>
+            </td>
+            <td class="col-dates">
+              @if (entry.records.length > 0) {
+                <div class="date-chips">
+                  @for (record of entry.records; track record.date + record.eventType) {
+                    <span class="date-chip" [class]="'chip-' + record.eventType.toLowerCase()">{{ record.date }}</span>
+                  }
+                </div>
+              } @else {
+                <span class="no-records">--</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-flat-button (click)="onClose()">Close</button>
+</mat-dialog-actions>

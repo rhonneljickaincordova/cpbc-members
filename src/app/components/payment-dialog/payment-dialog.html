@@ -1,0 +1,80 @@
+<h2 mat-dialog-title>Add Payment</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form">
+    <!-- Member search -->
+    @if (selectedMember) {
+      <div class="selected-member">
+        <div class="selected-avatar">{{ selectedMember.name.charAt(0) }}</div>
+        <div class="selected-info">
+          <span class="selected-name">{{ selectedMember.name }}</span>
+          @if (selectedMember.nickname) {
+            <span class="selected-nickname">{{ selectedMember.nickname }}</span>
+          }
+        </div>
+        <button mat-icon-button (click)="clearMember()" type="button" class="clear-btn">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    } @else {
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Search member</mat-label>
+        <input
+          matInput
+          [(ngModel)]="memberSearch"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="onMemberSearch()"
+          placeholder="Type name or nickname..."
+          autocomplete="off"
+        />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+
+      @if (searchResults.length > 0) {
+        <div class="member-results">
+          @for (member of searchResults; track member.id) {
+            <div class="member-result-item" (click)="selectMember(member)">
+              <div class="result-avatar">{{ member.name.charAt(0) }}</div>
+              <div class="result-info">
+                <span class="result-name">{{ member.name }}</span>
+                <span class="result-nickname">{{ member.nickname }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      @if (memberSearch && searchResults.length === 0) {
+        <p class="no-match">No member found</p>
+      }
+    }
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Amount (PHP)</mat-label>
+      <input matInput type="number" formControlName="amount" placeholder="0" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Payment Type</mat-label>
+      <mat-select formControlName="paymentType">
+        @for (type of paymentTypes; track type) {
+          <mat-option [value]="type">{{ type }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        @for (status of statuses; track status) {
+          <mat-option [value]="status">{{ status }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button (click)="onSave()" [disabled]="form.invalid">Add Payment</button>
+</mat-dialog-actions>

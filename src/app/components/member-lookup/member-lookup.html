@@ -1,0 +1,166 @@
+<div class="lookup-page" [class.embedded]="embedded">
+  <div class="lookup-container">
+    <!-- Header -->
+    @if (!embedded) {
+      <div class="lookup-header">
+        <button mat-icon-button (click)="goBack()" class="back-btn">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <img src="club-logo.png" alt="CPBC" class="lookup-logo" />
+        <h1>My Attendance</h1>
+        <p>Search your name to view your attendance and dues</p>
+      </div>
+    }
+
+    <!-- Search -->
+    @if (!selectedMember) {
+      <div class="search-section">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Search by name or nickname</mat-label>
+          <input
+            matInput
+            [(ngModel)]="searchQuery"
+            (ngModelChange)="onSearch()"
+            placeholder="Type your name..."
+            autocomplete="off"
+          />
+          <mat-icon matPrefix>search</mat-icon>
+          @if (searchQuery) {
+            <button matSuffix mat-icon-button (click)="searchQuery = ''; filteredMembers = []">
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+        </mat-form-field>
+
+        @if (loading) {
+          <div class="loading">
+            <mat-spinner diameter="32"></mat-spinner>
+            <span>Loading members...</span>
+          </div>
+        }
+
+        <!-- Search Results -->
+        @if (filteredMembers.length > 0) {
+          <div class="search-results">
+            @for (member of filteredMembers; track member.id) {
+              <mat-card class="member-result" (click)="selectMember(member)">
+                <div class="member-result-content">
+                  <div class="member-avatar">{{ member.name.charAt(0) }}</div>
+                  <div class="member-info">
+                    <span class="member-name">{{ member.name }}</span>
+                    <span class="member-detail">{{ member.nickname }}</span>
+                  </div>
+                  <mat-icon class="chevron">chevron_right</mat-icon>
+                </div>
+              </mat-card>
+            }
+          </div>
+        }
+
+        @if (searchQuery && filteredMembers.length === 0 && !loading) {
+          <div class="no-results">
+            <mat-icon>person_off</mat-icon>
+            <p>No member found for "{{ searchQuery }}"</p>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Member Detail -->
+    @if (selectedMember) {
+      <div class="detail-section">
+        <mat-card class="profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar">{{ selectedMember.name.charAt(0) }}</div>
+            <div class="profile-info">
+              <h2>{{ selectedMember.name }}</h2>
+              <p>{{ selectedMember.nickname }}</p>
+            </div>
+          </div>
+          <button mat-stroked-button class="change-btn" (click)="clearSelection()">
+            <mat-icon>search</mat-icon>
+            Search Another
+          </button>
+        </mat-card>
+
+        <!-- Dues Card -->
+        <mat-card class="dues-card">
+          <div class="dues-header">
+            <mat-icon>receipt_long</mat-icon>
+            <span>Yearly Dues ({{ yearlyDues | currency: 'PHP':'symbol':'1.0-0' }})</span>
+          </div>
+
+          <div class="dues-amounts">
+            <div class="dues-paid">
+              <span class="dues-label">Paid</span>
+              <span class="dues-value paid">{{ totalPaid | currency: 'PHP':'symbol':'1.0-0' }}</span>
+            </div>
+            <div class="dues-remaining">
+              <span class="dues-label">Balance</span>
+              <span class="dues-value" [class.clear]="remainingBalance === 0" [class.pending]="remainingBalance > 0">
+                {{ remainingBalance | currency: 'PHP':'symbol':'1.0-0' }}
+              </span>
+            </div>
+          </div>
+
+          <mat-progress-bar
+            mode="determinate"
+            [value]="paidPercentage"
+            class="dues-progress"
+          ></mat-progress-bar>
+
+          <div class="dues-footer">
+            <span class="dues-percent">{{ paidPercentage }}% paid</span>
+            <span class="dues-monthly">{{ monthlyDues | currency: 'PHP':'symbol':'1.0-0' }}/month</span>
+          </div>
+        </mat-card>
+
+        <!-- Attendance Stats -->
+        <div class="stats-row">
+          <div class="stat-chip practice">
+            <mat-icon>fitness_center</mat-icon>
+            <span class="stat-count">{{ practiceCount }}</span>
+            <span class="stat-type">Practice</span>
+          </div>
+          <div class="stat-chip game">
+            <mat-icon>sports_basketball</mat-icon>
+            <span class="stat-count">{{ gameCount }}</span>
+            <span class="stat-type">Game</span>
+          </div>
+          <div class="stat-chip meeting">
+            <mat-icon>groups</mat-icon>
+            <span class="stat-count">{{ meetingCount }}</span>
+            <span class="stat-type">Meeting</span>
+          </div>
+        </div>
+
+        <!-- Attendance List -->
+        <h3 class="section-title">Attendance History</h3>
+
+        @if (memberAttendance.length === 0) {
+          <div class="no-results">
+            <mat-icon>event_busy</mat-icon>
+            <p>No attendance records found</p>
+          </div>
+        }
+
+        <div class="attendance-list">
+          @for (record of memberAttendance; track record.date + record.eventType) {
+            <div class="attendance-row">
+              <div class="event-icon" [ngClass]="record.eventType.toLowerCase()">
+                @if (record.eventType === 'Practice') { <mat-icon>fitness_center</mat-icon> }
+                @if (record.eventType === 'Game') { <mat-icon>sports_basketball</mat-icon> }
+                @if (record.eventType === 'Meeting') { <mat-icon>groups</mat-icon> }
+              </div>
+              <div class="event-info">
+                <span class="event-type">{{ record.eventType }}</span>
+                <span class="event-date">{{ record.date }}</span>
+              </div>
+              <mat-icon class="check-icon">check_circle</mat-icon>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'Add' }} League</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>League Name</mat-label>
+      <input matInput formControlName="name" placeholder="League name" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button (click)="onSave()" [disabled]="form.invalid">
+    {{ isEdit ? 'Update' : 'Save' }}
+  </button>
+</mat-dialog-actions>

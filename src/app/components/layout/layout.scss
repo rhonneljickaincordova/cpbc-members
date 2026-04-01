@@ -1,0 +1,167 @@
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 260px;
+  background: #1a1a1a;
+  border-right: none;
+}
+
+.sidenav-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-logo {
+  width: 72px;
+  height: auto;
+  margin-bottom: 12px;
+}
+
+.nav-title {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+// Nav list items on dark background
+.sidenav ::ng-deep .mat-mdc-nav-list {
+  padding-top: 8px;
+}
+
+.sidenav ::ng-deep .mat-mdc-list-item {
+  margin: 4px 12px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.7) !important;
+
+  .mdc-list-item__primary-text {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  .mat-icon {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+
+    .mdc-list-item__primary-text {
+      color: #fff !important;
+    }
+
+    .mat-icon {
+      color: #fff !important;
+    }
+  }
+}
+
+.active-link {
+  background-color: rgba(211, 47, 47, 0.2) !important;
+
+  ::ng-deep .mdc-list-item__primary-text {
+    color: #ef5350 !important;
+  }
+
+  ::ng-deep .mat-icon {
+    color: #ef5350 !important;
+  }
+}
+
+// Footer logout
+.sidenav-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 8px;
+
+  mat-divider {
+    border-color: rgba(255, 255, 255, 0.08);
+    margin: 0 16px 8px;
+  }
+}
+
+.logout-item {
+  cursor: pointer;
+  margin: 4px 12px;
+  border-radius: 12px;
+
+  ::ng-deep .mdc-list-item__primary-text {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  ::ng-deep .mat-icon {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+
+    ::ng-deep .mdc-list-item__primary-text {
+      color: #fff !important;
+    }
+
+    ::ng-deep .mat-icon {
+      color: #fff !important;
+    }
+  }
+}
+
+// Toolbar
+.app-toolbar {
+  background: #fff;
+  color: #1a1a1a;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.toolbar-logo {
+  width: 32px;
+  height: auto;
+  margin-right: 12px;
+}
+
+.toolbar-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+// Content area
+.content {
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fafafa;
+  min-height: calc(100vh - 64px);
+}
+
+@media (max-width: 599px) {
+  .content {
+    padding: 16px;
+  }
+
+  .toolbar-title {
+    font-size: 13px;
+  }
+
+  .toolbar-logo {
+    width: 28px;
+    margin-right: 8px;
+  }
+}
