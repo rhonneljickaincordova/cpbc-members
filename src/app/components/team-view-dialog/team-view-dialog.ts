@@ -64,6 +64,18 @@ export class TeamViewDialog implements OnInit {
     return name ? name.charAt(0) : '?';
   }
 
+  formatDate(dateStr: string): string {
+    const date = new Date(dateStr + 'T00:00:00');
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const day = days[date.getDay()];
+    const month = months[date.getMonth()];
+    const dd = String(date.getDate()).padStart(2, '0');
+    const yyyy = date.getFullYear();
+    return `${day}, ${month}-${dd}-${yyyy}`;
+  }
+
   onClose(): void {
     this.dialogRef.close();
   }

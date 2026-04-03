@@ -39,7 +39,7 @@
               @if (entry.records.length > 0) {
                 <div class="date-chips">
                   @for (record of entry.records; track record.date + record.eventType) {
-                    <span class="date-chip" [class]="'chip-' + record.eventType.toLowerCase()">{{ record.date }}</span>
+                    <span class="date-chip" [class]="'chip-' + record.eventType.toLowerCase()">{{ formatDate(record.date) }}</span>
                   }
                 </div>
               } @else {
