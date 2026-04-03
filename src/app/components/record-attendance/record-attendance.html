@@ -1,0 +1,139 @@
+<div class="record-page">
+  <div class="record-container">
+    <!-- Header -->
+    <div class="record-header">
+      <button mat-icon-button (click)="goBack()" class="back-btn">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <img src="club-logo.png" alt="CPBC" class="record-logo" />
+      <h1>Record Attendance</h1>
+      <p>Search your name to record your attendance</p>
+    </div>
+
+    <!-- Search -->
+    @if (!selectedMember) {
+      <div class="search-section">
+        @if (!eventsReady) {
+          <div class="loading">
+            <mat-spinner diameter="32"></mat-spinner>
+            <span>Loading...</span>
+          </div>
+        } @else {
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Search by name or nickname</mat-label>
+            <input
+              matInput
+              [(ngModel)]="searchQuery"
+              (ngModelChange)="onSearch()"
+              placeholder="Type your name..."
+              autocomplete="off"
+            />
+            <mat-icon matPrefix>search</mat-icon>
+            @if (searchQuery) {
+              <button matSuffix mat-icon-button (click)="searchQuery = ''; filteredMembers = []">
+                <mat-icon>close</mat-icon>
+              </button>
+            }
+          </mat-form-field>
+
+          <!-- Search Results -->
+          @if (filteredMembers.length > 0) {
+            <div class="search-results">
+              @for (member of filteredMembers; track member.id) {
+                <mat-card class="member-result" (click)="selectMember(member)">
+                  <div class="member-result-content">
+                    <div class="member-avatar">{{ member.name.charAt(0) }}</div>
+                    <div class="member-info">
+                      <span class="member-name">{{ member.name }}</span>
+                      <span class="member-detail">{{ member.nickname }}</span>
+                    </div>
+                    <mat-icon class="chevron">chevron_right</mat-icon>
+                  </div>
+                </mat-card>
+              }
+            </div>
+          }
+
+          @if (searchQuery && filteredMembers.length === 0 && !loading) {
+            <div class="no-results">
+              <mat-icon>person_off</mat-icon>
+              <p>No member found for "{{ searchQuery }}"</p>
+            </div>
+          }
+        }
+      </div>
+    }
+
+    <!-- Selected Member + Today's Events -->
+    @if (selectedMember) {
+      <div class="detail-section">
+        <mat-card class="profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar">{{ selectedMember.name.charAt(0) }}</div>
+            <div class="profile-info">
+              <h2>{{ selectedMember.name }}</h2>
+              <p>{{ selectedMember.nickname }}</p>
+            </div>
+          </div>
+        </mat-card>
+
+        <!-- Today's Events -->
+        @if (todayEvents.length > 0) {
+          <mat-card class="today-events-card">
+            <div class="today-events-header">
+              <mat-icon>today</mat-icon>
+              <span>Today's Events</span>
+            </div>
+            <div class="today-events-list">
+              @for (event of todayEvents; track event.id) {
+                <div class="event-row">
+                  <div class="event-icon" [ngClass]="event.eventType.toLowerCase()">
+                    @if (event.eventType === 'Practice') { <mat-icon>fitness_center</mat-icon> }
+                    @if (event.eventType === 'Game') { <mat-icon>sports_basketball</mat-icon> }
+                    @if (event.eventType === 'Meeting') { <mat-icon>groups</mat-icon> }
+                  </div>
+                  <div class="event-info">
+                    <span class="event-type">{{ event.eventType }}</span>
+                    <span class="event-date">{{ event.date }}</span>
+                  </div>
+                  @if (isPresent(event.id!)) {
+                    <span class="present-badge">
+                      <mat-icon>check_circle</mat-icon>
+                      Present
+                    </span>
+                  }
+                </div>
+              }
+            </div>
+
+            @if (!allMarked) {
+              <button
+                mat-flat-button
+                color="primary"
+                class="mark-present-btn"
+                [disabled]="marking"
+                (click)="markAllPresent()"
+              >
+                @if (marking) {
+                  <mat-spinner diameter="20"></mat-spinner>
+                } @else {
+                  <span class="btn-content"><mat-icon>how_to_reg</mat-icon> Mark As Present</span>
+                }
+              </button>
+            }
+          </mat-card>
+        } @else {
+          <div class="no-events">
+            <mat-icon>event_busy</mat-icon>
+            <p>No events scheduled today</p>
+          </div>
+        }
+
+        <button mat-stroked-button class="change-btn" (click)="clearSelection()">
+          <mat-icon>search</mat-icon>
+          Search Another
+        </button>
+      </div>
+    }
+  </div>
+</div>

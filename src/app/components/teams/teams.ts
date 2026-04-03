@@ -142,8 +142,11 @@ export class Teams implements OnInit {
 
   viewTeam(team: Team): void {
     this.dialog.open(TeamViewDialog, {
-      width: '900px',
-      maxWidth: '95vw',
+      width: '100vw',
+      maxWidth: '100vw',
+      height: '100vh',
+      maxHeight: '100vh',
+      panelClass: 'fullscreen-dialog',
       data: { team, memberMap: this.memberMap },
     });
   }

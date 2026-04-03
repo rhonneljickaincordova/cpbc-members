@@ -1,0 +1,392 @@
+.record-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a1a1a 0%, #1a1a1a 280px, #f5f5f5 280px);
+  padding-bottom: 40px;
+}
+
+.record-container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+// Header
+.record-header {
+  text-align: center;
+  padding: 32px 0 40px;
+  position: relative;
+
+  .back-btn {
+    position: absolute;
+    top: 24px;
+    left: -4px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+.record-logo {
+  width: 72px;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+// Search
+.search-section {
+  margin-top: -8px;
+
+  .mat-mdc-form-field {
+    // Text & placeholder
+    --mat-form-field-outlined-input-text-color: #fff;
+    --mat-form-field-outlined-input-text-placeholder-color: rgba(255, 255, 255, 0.4);
+    --mat-form-field-outlined-caret-color: #fff;
+
+    // Label
+    --mat-form-field-outlined-label-text-color: rgba(255, 255, 255, 0.7);
+    --mat-form-field-outlined-hover-label-text-color: #fff;
+    --mat-form-field-outlined-focus-label-text-color: #fff;
+
+    // Outline
+    --mat-form-field-outlined-outline-color: rgba(255, 255, 255, 0.3);
+    --mat-form-field-outlined-hover-outline-color: rgba(255, 255, 255, 0.6);
+    --mat-form-field-outlined-focus-outline-color: #fff;
+
+    // Icons
+    --mat-form-field-leading-icon-color: rgba(255, 255, 255, 0.7);
+    --mat-form-field-trailing-icon-color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  color: #999;
+}
+
+// Search results
+.search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.member-result {
+  cursor: pointer;
+  border-radius: 14px !important;
+  transition: transform 0.15s, box-shadow 0.15s;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.member-result-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+}
+
+.member-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d32f2f, #e65100);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.member-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.member-name {
+  font-weight: 500;
+  font-size: 15px;
+  color: #1a1a1a;
+}
+
+.member-detail {
+  font-size: 13px;
+  color: #999;
+}
+
+.chevron {
+  color: #ccc;
+}
+
+// No results
+.no-results {
+  text-align: center;
+  padding: 40px 16px;
+  color: #999;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: #ddd;
+    margin-bottom: 12px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+  }
+}
+
+// Profile card
+.profile-card {
+  border-radius: 16px !important;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.profile-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d32f2f, #e65100);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.profile-info {
+  h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  p {
+    margin: 2px 0 0;
+    color: #999;
+    font-size: 14px;
+  }
+}
+
+.change-btn {
+  width: 100%;
+  border-radius: 10px !important;
+  height: 40px;
+  margin-top: 20px;
+}
+
+// Today's Events
+.today-events-card {
+  border-radius: 16px !important;
+  padding: 20px;
+  border: 1px solid #eee;
+}
+
+.today-events-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: #1565c0;
+  }
+}
+
+.today-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.event-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: #fafafa;
+  border-radius: 12px;
+  border: 1px solid #eee;
+}
+
+.event-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  &.practice {
+    background: #e3f2fd;
+    color: #1565c0;
+  }
+
+  &.game {
+    background: #fce4ec;
+    color: #c62828;
+  }
+
+  &.meeting {
+    background: #fff3e0;
+    color: #e65100;
+  }
+}
+
+.event-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-type {
+  font-weight: 500;
+  font-size: 14px;
+  color: #1a1a1a;
+}
+
+.event-date {
+  font-size: 13px;
+  color: #999;
+}
+
+.mark-present-btn {
+  width: 100%;
+  margin-top: 16px;
+  height: 48px;
+  border-radius: 24px !important;
+  font-size: 16px;
+  font-weight: 600;
+
+  .btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  mat-spinner {
+    margin: 0 auto;
+  }
+}
+
+.present-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #2e7d32;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.no-events {
+  text-align: center;
+  padding: 40px 16px;
+  color: #999;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: #ddd;
+    margin-bottom: 12px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 399px) {
+  .record-header {
+    padding: 24px 0 32px;
+
+    h1 {
+      font-size: 20px;
+    }
+  }
+
+  .record-logo {
+    width: 56px;
+  }
+
+  .profile-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+
+  .profile-info h2 {
+    font-size: 17px;
+  }
+
+  .event-row {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .event-icon {
+    width: 36px;
+    height: 36px;
+  }
+}

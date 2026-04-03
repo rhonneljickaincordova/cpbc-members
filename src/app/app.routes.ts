@@ -11,6 +11,10 @@ export const routes: Routes = [
     loadComponent: () => import('./components/member-lookup/member-lookup').then((m) => m.MemberLookup),
   },
   {
+    path: 'record-attendance',
+    loadComponent: () => import('./components/record-attendance/record-attendance').then((m) => m.RecordAttendance),
+  },
+  {
     path: '',
     canActivate: [authGuard],
     loadComponent: () => import('./components/layout/layout').then((m) => m.Layout),

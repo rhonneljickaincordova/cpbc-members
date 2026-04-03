@@ -176,6 +176,19 @@
   }
 }
 
+.record-btn {
+  height: 48px;
+  font-size: 15px;
+  border-radius: 24px !important;
+  background-color: #1565c0 !important;
+  color: #fff !important;
+  margin-top: 10px;
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
 // Mobile: hide left panel, show inline logo
 @media (max-width: 899px) {
   .login-page {

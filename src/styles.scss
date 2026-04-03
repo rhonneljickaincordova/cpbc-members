@@ -35,6 +35,64 @@ html, body {
   border-radius: 3px;
 }
 
+// Fullscreen dialog
+.fullscreen-dialog .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.fullscreen-dialog .mat-mdc-dialog-content {
+  flex: 1;
+  max-height: none !important;
+  overflow: auto;
+}
+
+.fullscreen-dialog .mat-mdc-dialog-actions {
+  padding: 12px 24px;
+  border-top: 1px solid #eee;
+}
+
+// Attendance date indicators on calendar
+.has-practice .mat-calendar-body-cell-content,
+.has-game .mat-calendar-body-cell-content,
+.has-meeting .mat-calendar-body-cell-content,
+.has-multiple .mat-calendar-body-cell-content,
+.has-data .mat-calendar-body-cell-content {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+}
+
+.has-practice .mat-calendar-body-cell-content::after {
+  background-color: #1565c0;
+}
+
+.has-game .mat-calendar-body-cell-content::after {
+  background-color: #c62828;
+}
+
+.has-meeting .mat-calendar-body-cell-content::after {
+  background-color: #e65100;
+}
+
+.has-multiple .mat-calendar-body-cell-content::after {
+  background: linear-gradient(90deg, #1565c0 50%, #c62828 50%);
+}
+
+.has-data .mat-calendar-body-cell-content::after {
+  background-color: #888;
+}
+
 // Mobile-friendly dialogs
 @media (max-width: 599px) {
   .cdk-overlay-pane.mat-mdc-dialog-panel {

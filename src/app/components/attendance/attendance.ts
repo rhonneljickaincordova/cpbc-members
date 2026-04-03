@@ -46,12 +46,26 @@ export class Attendance implements OnInit {
   eventTypes = ['Practice', 'Game', 'Meeting'];
 
   allMembers: Member[] = [];
+  allAttendance: AttendanceModel[] = [];
   presentMembers: Member[] = [];
   existingRecord: AttendanceModel | null = null;
 
   searchQuery = '';
   searchResults: Member[] = [];
   presentFilter = '';
+
+  dateClass = (date: Date): string => {
+    const dateStr = this.formatDate(date);
+    const types = this.allAttendance
+      .filter((a) => a.date === dateStr)
+      .map((a) => a.eventType);
+    if (types.length === 0) return '';
+    if (types.includes('Practice') && types.includes('Game')) return 'has-multiple';
+    if (types.includes('Practice')) return 'has-practice';
+    if (types.includes('Game')) return 'has-game';
+    if (types.includes('Meeting')) return 'has-meeting';
+    return 'has-data';
+  };
 
   get filteredPresentMembers(): Member[] {
     const q = this.presentFilter.trim().toLowerCase();
@@ -65,6 +79,10 @@ export class Attendance implements OnInit {
     this.memberService.getAll().subscribe((members) => {
       this.allMembers = members;
       this.loadAttendance();
+    });
+
+    this.attendanceService.getAll().subscribe((records) => {
+      this.allAttendance = records;
     });
   }
 
